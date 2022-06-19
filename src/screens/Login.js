@@ -33,14 +33,20 @@ const Login = ({navigation}) => {
   const googleLogin = async () => {
     // Get the users ID token
     console.log(GoogleSignin.signIn());
-    const {idToken} = await GoogleSignin.signIn();
+    const {idToken} = await GoogleSignin.signIn()
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => {
+        console.log(error);
+      });
 
     // Create a Google credential with the token
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
     // console.log(googleCredential);
 
     // Sign-in the user with the credential
-    return auth().signInWithCredential(googleCredential);
+    return auth.signInWithCredential(googleCredential);
     // const provider = GoogleAuthProvider();
     // provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
     // provider.addScope('profile');
